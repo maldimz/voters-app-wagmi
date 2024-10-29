@@ -16,6 +16,43 @@ const VoteComponent = ({ address }: { address: Account["address"] }) => {
     args: [address],
   });
 
+  const {
+    data: candidates,
+    error: errorCandidates,
+    isPending: isPendingCandidates,
+  } = useReadContract({
+    address: ADDRESS,
+    abi: ABI,
+    functionName: "getAllCandidates",
+    args: [],
+  });
+
+  console.log("candidates", candidates);
+
+  if (votersIsPending || isPendingCandidates) {
+    return <div>Loading...</div>;
+  }
+
+  if (errorCandidates || votersError) {
+    return (
+      <>
+        {errorCandidates && (
+          <div>
+            Error:{" "}
+            {(errorCandidates as BaseError).shortMessage ||
+              errorCandidates.message}
+          </div>
+        )}
+        {votersError && (
+          <div>
+            Error:{" "}
+            {(votersError as BaseError).shortMessage || votersError.message}
+          </div>
+        )}
+      </>
+    );
+  }
+
   console.log(voters);
   console.log("votersError", votersError);
   console.log("votersIsPending", votersIsPending);
@@ -51,8 +88,7 @@ const VoteComponent = ({ address }: { address: Account["address"] }) => {
     <form onSubmit={submit}>
       <input name="candidateId" placeholder="0" required />
       <button disabled={isPending} type="submit">
-        Vote
-        {isPending ? "Confirming..." : "Mint"}
+        Vote {isPending ? "Confirming..." : "Mint"}
       </button>
       {hash && <div>Transaction Hash: {hash}</div>}
       {isConfirming && <div>Waiting for confirmation...</div>}
