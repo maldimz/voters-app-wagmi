@@ -12,7 +12,7 @@ function App() {
     <div className="w-full h-screen flex flex-col gap-12 justify-start items-center bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500">
       <div className="navbar text-base-100 bg-blue-600">
       <div className="flex-1">
-        <a className="btn btn-ghost text-white text-xl">Voters!</a>
+        <a className="btn btn-ghost text-white text-xl">VoteAves!</a>
       </div>
       <div className="flex-none text-white">
         <ul className="menu menu-horizontal px-1">
